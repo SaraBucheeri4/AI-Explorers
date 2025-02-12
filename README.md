@@ -1,7 +1,7 @@
 # AI-Explorers
 
 Team Memebrs:
-- Mariam Aysha
+- Maryam Aysha
 - Sabika Amjad
 - Sara Bucheeri
 
