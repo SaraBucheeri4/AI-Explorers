@@ -3,7 +3,6 @@
 Team Memebrs:
 - Mariam Aysha
 - Sabika Amjad
-- Ahmed Qarooni
 - Sara Bucheeri
 
 Tasks:
