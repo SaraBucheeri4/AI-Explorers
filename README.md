@@ -7,10 +7,10 @@ Team Memebrs:
 - Sara Bucheeri
 
 Tasks:
-- Create website Logo
-- Create AI images
-- Create website base
-- Create AI video
-- Think of infographics
-- Create illustrations
+- Create website Logo (Check)
+- Create AI images (Check)
+- Create website basen (Check)
+- Create AI video ()
+- Think of infographics (check)
+- Create illustrations 
 - 
