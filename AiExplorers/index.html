@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Academy: Responsible AI</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            font-family: "Comic Sans MS", "Chalkboard SE", sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+        .space {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            text-align: center;
+        }
+        .message {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 20%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 20;
+        }
+        .message.visible {
+            opacity: 1;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+        .planet {
+            position: absolute;
+            bottom: -10vh;
+            width: 120%;
+            height: 50vh;
+            background: linear-gradient(#1a4855, #2d2d2d);
+            border-radius: 50% 50% 0 0;
+            left: -10%;
+        }
+        .spaceship {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            left: 50%;
+            top: -50%;
+            background: url('Firefly_create_a_mascot_for_our_website_catered_to_kids_on_the_theme_responsible_ai_for_a_space_them-removebg-preview.png') no-repeat center center;
+            background-size: contain;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all 1.5s ease-in-out;
+            z-index: 10;
+        }
+        .spaceship.initial-entry {
+            opacity: 1;
+            top: 35%;
+        }
+        .spaceship.fly-away {
+            top: -50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        .spaceship.landed {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+        .case-image {
+            position: absolute;
+            bottom: 15vh;
+            width: 120px;
+            height: 200px;
+            cursor: pointer;
+            transform: translateX(-50%) scale(0);
+            transition: transform 0.5s ease-out;
+            z-index: 5;
+        }
+        .case-image.reveal {
+            transform: translateX(-50%) scale(1);
+        }
+        .case-image:hover {
+            transform: translateX(-50%) scale(1.1);
+        }
+        .case-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .case-image:nth-child(2) { left: 20%; }
+        .case-image:nth-child(3) { left: 40%; }
+        .case-image:nth-child(4) { left: 60%; }
+        .case-image:nth-child(5) { left: 80%; }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            z-index: 100;
+            border: 3px solid #4CAF50;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .modal.active {
+            display: block;
+            opacity: 1;
+        }
+        .modal h2 {
+            color: #4CAF50;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .modal p {
+            margin: 15px 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .lesson {
+            color: #FFC107;
+            font-weight: bold;
+            font-size: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        button {
+            background: #4CAF50;
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: inherit;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        @keyframes twinkle {
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="space" id="space">
+        <div id="initialMessage" class="message">
+            <h1>Let's see how AI can help us through these examples!</h1>
+        </div>
+        <div id="clickMessage" class="message">
+            <h1>Click on the Astronauts to learn more!</h1>
+        </div>
+        <div id="stars"></div>
+        <div class="planet">
+            <div class="spaceship" id="ship"></div>
+            <div class="case-image" data-case="1">
+                <img src="Firefly_MAKE_THE_FLAG_IN_THE_IMAGE_GREEN_38083-removebg-preview.png" alt="Study Buddy Case">
+            </div>
+            <div class="case-image" data-case="2">
+                <img src="Firefly_MAKE_THE_FLAG_IN_THE_IMAGE_PLAIN_RED_COLOR_25939-removebg-preview.png" alt="Art Adventures Case">
+            </div>
+            <div class="case-image" data-case="3">
+                <img src="Firefly_MAKE_THE_FLAG_IN_THE_IMAGE_PURPLE_58892-removebg-preview.png" alt="Fact Finding Case">
+            </div>
+            <div class="case-image" data-case="4">
+                <img src="Firefly_MAKE_THE_FLAG_IN_THE_IMAGE_YELLOW_38083-removebg-preview.png" alt="Space Safety Case">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <h2 id="modalTitle"></h2>
+        <p id="modalStory"></p>
+        <p class="lesson" id="modalLesson"></p>
+        <button id="playButton">Play Audio</button>
+        <button onclick="closeModal()">Blast Off Back to Ship! 🚀</button>
+    </div>
+
+    <audio id="audioPlayer"></audio>
+
+    <script>
+        // Create stars
+        const space = document.getElementById('space');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            space.appendChild(star);
+        }
+
+        const ship = document.getElementById('ship');
+        const initialMessage = document.getElementById('initialMessage');
+        const clickMessage = document.getElementById('clickMessage');
+        const caseImages = document.querySelectorAll('.case-image');
+        const audioPlayer = document.getElementById("audioPlayer");
+
+        // Initial animation sequence
+        function startSequence() {
+            // Show initial message and spaceship
+            setTimeout(() => {
+                initialMessage.classList.add('visible');
+                ship.classList.add('initial-entry');
+            }, 500);
+
+            // Fly away sequence
+            setTimeout(() => {
+                initialMessage.classList.remove('visible');
+                ship.classList.add('fly-away');
+            }, 3500);
+
+            // Show click message and reveal astronauts
+            setTimeout(() => {
+                clickMessage.classList.add('visible');
+                caseImages.forEach((image, index) => {
+                    setTimeout(() => {
+                        image.classList.add('reveal');
+                    }, index * 200);
+                });
+                ship.style.top = '35%';
+                ship.style.left = '50%';
+                ship.classList.remove('fly-away');
+            }, 5000);
+        }
+
+        // Start the sequence when page loads
+        window.onload = startSequence;
+
+        // Case data
+        const cases = [
+            {
+                id: 1,
+                title: "Your Super Smart Study Buddy!",
+                color: "#4CAF50",
+                position: 20,
+                story: "Hey space cadet! I'm Samir, and I love using AI to help me learn about history. It's like having a friendly robot teacher! When I get homework, I ask AI to explain things in a fun way, but I always make sure to write my answers in my own special way.",
+                lesson: "Remember: AI is your helper, but YOUR brain does the real work! 🌟",
+                audio: "samir.mp3"
+            },
+            {
+                id: 2,
+                title: "Art Adventures with AI!",
+                color: "#9C27B0",
+                position: 40,
+                story: "Hi space friend! I'm Abdulla, and I love making cool art with AI! It's like having a magical art buddy. I always make sure to use AI tools that play fair with other artists' work. Being creative is super fun when everyone gets to smile!",
+                lesson: "Be a space hero - respect other artists when creating with AI! 🎨",
+                audio: "abdullanew.mp3"
+            },
+            {
+                id: 3,
+                title: "Fact-Finding Space Mission",
+                color: "#2196F3",
+                position: 60,
+                story: "Greetings, fellow explorer! I'm Hamad, and I'm on a mission to discover amazing facts! When AI tells me something incredible, I put on my detective hat and check it in my trusty science books or ask my wise teacher.",
+                lesson: "Even AI astronauts can make mistakes - always double-check your facts! 🔍",
+                audio: "hamadnew.mp3"
+            },
+            {
+                id: 4,
+                title: "Space Safety Protocol",
+                color: "#F44336",
+                position: 80,
+                story: "Hello space cadet! I'm Maher, and I know all about staying safe in the AI galaxy! Just like how astronauts wear their special suits in space, I keep my personal information safely tucked away when talking to AI!",
+                lesson: "Keep your secret space codes to yourself - never share personal info with AI! 🛡️",
+                audio: "mahernew.mp3"
+            }
+        ];
+
+        function showCase(caseId) {
+            // Stop any currently playing audio
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+
+            const caseData = cases.find(c => c.id === parseInt(caseId));
+            if (caseData) {
+                clickMessage.classList.remove('visible');
+                const ship = document.getElementById("ship");
+                const modal = document.getElementById("modal");
+                const modalTitle = document.getElementById("modalTitle");
+                const modalStory = document.getElementById("modalStory");
+                const modalLesson = document.getElementById("modalLesson");
+                const playButton = document.getElementById("playButton");
+
+                ship.style.left = caseData.position + "%";
+                ship.style.top = "50%";
+                
+                setTimeout(() => {
+                    modalTitle.textContent = caseData.title;
+                    modalStory.textContent = caseData.story;
+                    modalLesson.textContent = caseData.lesson;
+                    modal.style.borderColor = caseData.color;
+                    modalTitle.style.color = caseData.color;
+                    modal.classList.add('active');
+                    playButton.onclick = () => playAudio(caseData.audio);
+                }, 1500);
+            }
+        }
+
+        function playAudio(audioSrc) {
+            audioPlayer.src = audioSrc;
+            audioPlayer.play();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("modal");
+            const ship = document.getElementById("ship");
+            
+            modal.classList.remove('active');
+            ship.style.left = "50%";
+            ship.style.top = "35%";
+            ship.style.transform = "translate(-50%, -50%)";
+            
+            // Stop audio when modal is closed
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            
+            setTimeout(() => {
+                clickMessage.classList.add('visible');
+            }, 1000);
+        }
+
+        // Add click listeners to case images
+        document.querySelectorAll('.case-image').forEach(image => {
+            image.addEventListener('click', () => {
+                const caseId = image.getAttribute('data-case');
+                showCase(caseId);
+            });
+        });
+    </script>
+</body>
+</html>
