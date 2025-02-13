@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resources & Guidelines - AI Explorers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+    <style>
+
+        /* Home button styles */
+.home-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.home-button:hover {
+    transform: scale(1.1);
+}
+
+.home-button img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.home-button .logo-text {
+    font-family: 'Cherry Bomb One', cursive;
+    color: var(--text);
+    margin-left: 10px;
+    font-size: 1.2em;
+}
+
+        :root {
+            --background: #0B0B3B;
+            --text: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-hover: rgba(255, 255, 255, 0.15);
+            --accent: #4facfe;
+            --star-color: white;
+            --link-color: #4facfe;
+        }
+
+        [data-theme="light"] {
+            --background: #E6CCFF;
+            --text: #3D155F;
+            --card-bg: rgba(61, 21, 95, 0.1);
+            --card-hover: rgba(61, 21, 95, 0.15);
+            --accent: #3D155F;
+            --star-color: #3D155F;
+            --link-color: #2A0944;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: var(--background);
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: var(--star-color);
+            border-radius: 50%;
+            transition: background-color 0.5s ease;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Cherry Bomb One', cursive;
+            text-align: center;
+            font-size: 3.5em;
+            margin-bottom: 40px;
+            color: var(--text);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .intro-text {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 50px;
+            line-height: 1.6;
+            color: var(--text);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+            padding: 0 20px;
+        }
+
+        .resource-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-10px);
+            background: var(--card-hover);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-family: 'Cherry Bomb One', cursive;
+            font-size: 1.8em;
+            color: var(--accent);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .resource-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .resource-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .resource-item:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .resource-link {
+            display: block;
+            padding: 15px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .resource-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .resource-title {
+            font-weight: bold;
+            color: var(--link-color);
+            margin-bottom: 5px;
+        }
+
+        .resource-description {
+            font-size: 0.95em;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        /* Theme Toggle Button styles remain the same */
+        .theme-toggle {
+            position: fixed;
+            right: 30px;
+            top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            padding: 0;
+            z-index: 1000;
+        }
+
+        .theme-toggle .icon {
+            position: relative;
+            width: 24px;
+            height: 24px;
+        }
+
+        .theme-toggle svg {
+            stroke: var(--text);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+        }
+
+        .theme-toggle .sun,
+        .theme-toggle .moon {
+            position: absolute;
+            transition: opacity 0.5s ease;
+        }
+
+        [data-theme="light"] .moon {
+            opacity: 0;
+        }
+
+        [data-theme="light"] .sun {
+            opacity: 1;
+        }
+
+        [data-theme="dark"] .moon {
+            opacity: 1;
+        }
+
+        [data-theme="dark"] .sun {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-button">
+        <img src="logo.png" alt="AI Explorers Logo">
+        <span class="logo-text">AI Explorers</span>
+    </a>
+    <div class="stars" id="stars"></div>
+    
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <div class="icon">
+            <svg class="sun" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </div>
+    </button>
+
+    <div class="container">
+        <h1>AI Mission Control Center 🚀</h1>
+        <p class="intro-text">
+            Welcome to our cosmic collection of AI resources! Here you'll find carefully curated guides, tools, and insights to help you navigate the AI universe safely and effectively. Let's explore together! 🌟
+        </p>
+
+        <div class="resources-grid">
+            <div class="resource-card">
+                <div class="card-icon">📚</div>
+                <h2 class="card-title">Safe AI Navigation Guide</h2>
+                <ul class="resource-list">
+                    <li class="resource-item">
+                        <a href="https://www.tigera.io/learn/guides/llm-security/ai-safety/?utm_source=chatgpt.com" class="resource-link">
+                            <div class="resource-title">AI Safety Principles</div>
+                            <div class="resource-description">Learn about core principles for responsible AI use, including privacy protection and ethical considerations.</div>
+                        </a>
+                    </li>
+                    <li class="resource-item">
+                        <a href="https://medium.com/@kiplangatkorir/digital-rights-and-ai-045b3462af19" class="resource-link">
+                            <div class="resource-title">Digital Citizenship Guide</div>
+                            <div class="resource-description">Understanding your rights and responsibilities in the AI-powered digital world.</div>
+                        </a>
+                    </li>
+                    <li class="resource-item">
+                        <a href="https://www.techtarget.com/whatis/feature/Steps-in-fact-checking-AI-generated-content" class="resource-link">
+                            <div class="resource-title">Fact-Checking in the AI Era</div>
+                            <div class="resource-description">Tools and techniques for verifying AI-generated content and avoiding misinformation.</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="resource-card">
+                <div class="card-icon">👶</div>
+                <h2 class="card-title">AI & Child Development</h2>
+                <ul class="resource-list">
+                    <li class="resource-item">
+                        <a href="https://americanspcc.org/keeping-kids-safe-online-with-ai-balancing-risks-and-protections/" class="resource-link">
+                            <div class="resource-title">Educational AI Tools</div>
+                            <div class="resource-description">Age-appropriate AI tools that support learning and creativity while maintaining safety.</div>
+                        </a>
+                    </li>
+                    <li class="resource-item">
+                        <a href="https://www.sciencedirect.com/science/article/pii/S2590291124004182" class="resource-link">
+                            <div class="resource-title">Digital Learning Balance</div>
+                            <div class="resource-description">Guidelines for healthy integration of AI tools in children's education and development.</div>
+                        </a>
+                    </li>
+                    <li class="resource-item">
+                        <a href="https://www.barnevakten.no/kids-and-media-ai-guide/" class="resource-link">
+                            <div class="resource-title">Parent's Guide to AI</div>
+                            <div class="resource-description">Tips for parents on guiding children's interaction with AI technology.</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="resource-card">
+                <div class="card-icon">🛠️</div>
+                <h2 class="card-title">Essential AI Tools For You</h2>
+                <ul class="resource-list">
+                    <li class="resource-item">
+                        <a href="https://5app.com/resources/the-ultimate-list-of-ai-tools-for-learning-and-development" class="resource-link">
+                            <div class="resource-title">Learning Assistants</div>
+                            <div class="resource-description">AI-powered tools for homework help, research, and skill development.</div>
+                        </a>
+                    </li>
+                    <li class="resource-item">
+                        <a href="https://elements.envato.com/learn/creative-ai-tools" class="resource-link">
+                            <div class="resource-title">Creative Tools</div>
+                            <div class="resource-description">Safe AI tools for art, music, and storytelling that spark creativity.</div>
+                        </a>
+                    </li>
+                    <li class="resource-item">
+                        <a href="https://www.idtech.com/blog/artificial-intelligence-games-and-activities-for-students" class="resource-link">
+                            <div class="resource-title">Educational Games</div>
+                            <div class="resource-description">AI-enhanced games that make learning fun while developing critical thinking skills.</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Star creation function
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 100;
+
+            // Clear existing stars
+            starsContainer.innerHTML = '';
+
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const size = Math.random() * 3 + 1;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 2;
+
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${left}%`;
+                star.style.top = `${top}%`;
+                star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite ${delay}s`;
+
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Theme toggle functionality
+        const themeToggle = document.querySelector('.theme-toggle');
+        const root = document.documentElement;
+
+        function applyTheme(theme) {
+            root.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            createStars();
+        }
+
+        function toggleTheme() {
+            const currentTheme = root.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        }
+
+        // Initialize theme
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
+        }
+
+        // Event listeners
+        themeToggle.addEventListener('click', toggleTheme);
+        window.addEventListener('load', initTheme);
+        window.addEventListener('load', createStars);
+    </script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+:root {
+    --background: #0B0B3B;
+    --text: #ffffff;
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --button-hover: rgba(255, 255, 255, 0.2);
+    --star-color: white;
+}
+
+[data-theme="light"] {
+    --background: #E6CCFF;
+    --text: #3D155F;
+    --card-bg: rgba(61, 21, 95, 0.1);
+    --button-hover: rgba(61, 21, 95, 0.2);
+    --star-color: #3D155F;
+}
+
+.theme-toggle {
+    position: fixed;
+    right: 30px;
+    top: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    padding: 0;
+    z-index: 1000;
+}
+
+.theme-toggle .icon {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.theme-toggle svg {
+    stroke: var(--text);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+}
+
+.theme-toggle .sun,
+.theme-toggle .moon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.5s ease;
+}
+
+[data-theme="light"] .moon {
+    opacity: 0;
+}
+
+[data-theme="light"] .sun {
+    opacity: 1;
+}
+
+[data-theme="dark"] .moon {
+    opacity: 1;
+}
+
+[data-theme="dark"] .sun {
+    opacity: 0;
+}
+
+/* Home button styles */
+.home-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.home-button:hover {
+    transform: scale(1.1);
+}
+
+.home-button img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.home-button .logo-text {
+    font-family: 'Cherry Bomb One', cursive;
+    color: var(--text);
+    margin-left: 10px;
+    font-size: 1.2em;
+}
+
+body {
+    margin: 0;
+    background: var(--background);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.space {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    text-align: center;
+}
+
+.message {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 20%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 20;
+}
+
+.message h1 {
+    font-family: 'Cherry Bomb One', cursive;
+    color: var(--text);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+.message.visible {
+    opacity: 1;
+}
+
+.star {
+    position: absolute;
+    background: var(--star-color);
+    border-radius: 50%;
+    animation: twinkle 2s infinite;
+    transition: background-color 0.5s ease;
+}
+
+.planet {
+    position: absolute;
+    bottom: -10vh;
+    width: 120%;
+    height: 50vh;
+    background: var(--card-bg);
+    border-radius: 50% 50% 0 0;
+    left: -10%;
+}
+
+.spaceship {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    left: 50%;
+    top: -50%;
+    background: url('Firefly_create_a_mascot_for_our_website_catered_to_kids_on_the_theme_responsible_ai_for_a_space_them-removebg-preview.png') no-repeat center center;
+    background-size: contain;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 1.5s ease-in-out;
+    z-index: 10;
+}
+
+.spaceship.initial-entry {
+    opacity: 1;
+    top: 35%;
+}
+
+.spaceship.fly-away {
+    top: -50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.case-image {
+    position: absolute;
+    bottom: 15vh;
+    width: 120px;
+    height: 200px;
+    cursor: pointer;
+    transform: translateX(-50%) scale(0);
+    transition: transform 0.5s ease-out;
+    z-index: 5;
+}
+
+.case-image.reveal {
+    transform: translateX(-50%) scale(1);
+}
+
+.case-image:hover {
+    transform: translateX(-50%) scale(1.1);
+}
+
+.case-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.case-image:nth-child(2) { left: 20%; }
+.case-image:nth-child(3) { left: 40%; }
+.case-image:nth-child(4) { left: 60%; }
+.case-image:nth-child(5) { left: 80%; }
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    z-index: 100;
+    border: 3px solid #4CAF50;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    backdrop-filter: blur(10px);
+}
+
+.modal.active {
+    display: block;
+    opacity: 1;
+}
+
+.modal h2 {
+    font-family: 'Cherry Bomb One', cursive;
+    color: var(--text);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.modal p {
+    margin: 15px 0;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.lesson {
+    color: #FFC107;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+button {
+    background: linear-gradient(45deg, #00f2fe 0%, #4facfe 100%);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: inherit;
+    margin-top: 20px;
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* Theme toggle styles */
+.theme-toggle {
+    position: fixed;
+    right: 30px;
+    top: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    padding: 0;
+    z-index: 1000;
+}
+
+.theme-toggle .icon {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.theme-toggle svg {
+    stroke: var(--text);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+}
+
+.theme-toggle .sun,
+.theme-toggle .moon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.5s ease;
+}
+
+[data-theme="light"] .moon {
+    opacity: 0;
+}
+
+[data-theme="light"] .sun {
+    opacity: 1;
+}
+
+[data-theme="dark"] .moon {
+    opacity: 1;
+}
+
+[data-theme="dark"] .sun {
+    opacity: 0;
+}
+
+@keyframes twinkle {
+    50% { opacity: 0.3; }
+}
+
+.nova-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background: linear-gradient(45deg, #9C27B0, #673AB7);
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+}
+
+.nova-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(156, 39, 176, 0.4);
+}
+
+.nova-button:active {
+    transform: scale(0.95);
+}
+
+[data-theme="light"] .nova-button {
+    background: linear-gradient(45deg, #4B0082, #3D155F);
+    box-shadow: 0 4px 15px rgba(75, 0, 130, 0.3);
+}
+
+[data-theme="light"] .nova-button:hover {
+    box-shadow: 0 6px 20px rgba(75, 0, 130, 0.4);
+}

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AI Explorers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+    <style>
+        /* Home button styles */
+.home-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.home-button:hover {
+    transform: scale(1.1);
+}
+
+.home-button img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.home-button .logo-text {
+    font-family: 'Cherry Bomb One', cursive;
+    color: var(--text);
+    margin-left: 10px;
+    font-size: 1.2em;
+}
+
+        :root {
+            --background: #0B0B3B;
+            --text: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-hover: rgba(255, 255, 255, 0.15);
+            --accent: #ff9f43;
+            --description: #ddd;
+            --star-color: white;
+        }
+
+        [data-theme="light"] {
+            --background: #E6CCFF;
+            --text: #3D155F;
+            --card-bg: rgba(61, 21, 95, 0.1);
+            --card-hover: rgba(61, 21, 95, 0.15);
+            --accent: #2A0944;
+            --description: #3D155F;
+            --star-color: #3D155F;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: var(--background);
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: var(--star-color);
+            border-radius: 50%;
+            transition: background-color 0.5s ease;
+        }
+
+        h1 {
+            font-family: 'Cherry Bomb One', cursive;
+            text-align: center;
+            font-size: 2.5em;
+            margin: 40px 0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            max-width: 1200px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .team-member {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            width: 280px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            background: var(--card-hover);
+        }
+
+        .avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #ff6b6b, #6b6bff);
+            padding: 5px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .role {
+            color: var(--accent);
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .name {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .description {
+            font-size: 0.9em;
+            color: var(--description);
+            line-height: 1.6;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            right: 30px;
+            top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            padding: 0;
+            z-index: 1000;
+        }
+
+        .theme-toggle .icon {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle svg {
+            stroke: var(--text);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+        }
+
+        .theme-toggle .sun,
+        .theme-toggle .moon {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.5s ease;
+        }
+
+        [data-theme="light"] .moon {
+            opacity: 0;
+        }
+
+        [data-theme="light"] .sun {
+            opacity: 1;
+        }
+
+        [data-theme="dark"] .moon {
+            opacity: 1;
+        }
+
+        [data-theme="dark"] .sun {
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="home-button">
+        <img src="logo.png" alt="AI Explorers Logo">
+        <span class="logo-text">AI Explorers</span>
+    </a>
+    <div class="stars" id="stars"></div>
+    
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <div class="icon">
+            <svg class="sun" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </div>
+    </button>
+
+    <h1>Our Galactic Team</h1>
+    <div class="team-container">
+        <div class="team-member">
+            <div class="avatar">
+                <img src="sara.png" alt="Team Member 1">
+            </div>
+            <div class="role">Code Commander</div>
+            <div class="name">Sara Bucheeri</div>
+            <div class="description">3rd-year Programming student at Bahrain Polytechnic. As the coding captain for our space-themed website project, I focused on developing the interactive features and ensuring a seamless user experience. From designing responsive layouts to implementing key functionalities, I enjoyed bringing our vision to life through code. This project has been an inspiring journey, and I’m proud to have contributed to making Responsible AI both engaging and educational for kids!</div>
+        </div>
+
+        <div class="team-member">
+            <div class="avatar">
+                <img src="sabika.png" alt="Team Member 2">
+            </div>
+            <div class="role">Code-Pilot & Desginer</div>
+            <div class="name">Sabika Amjad</div>
+            <div class="description">A 4th-year student at Ahlia University. I served as the design navigator and code copilot for our space-themed website project. I contributed by creating captivating AI-generated space visuals and assisting with the code to bring our vision to life. Working on this project was an incredible experience, and I’m thrilled to have inspired the next generation of space explorers!</div>
+        </div>
+
+        <div class="team-member">
+            <div class="avatar">
+                <img src="maryam.png" alt="Team Member 3">
+            </div>
+            <div class="role">AI Navigator</div>
+            <div class="name">Maryam Aysha</div>
+            <div class="description">2nd-year Computer Science student at the University of Technology Bahrain. I took on the role of creative architect and AI visual guide for our space-themed website project. My contributions included crafting captivating AI-generated images that brought our cosmic vision to life. This project has been an amazing journey, and I’m excited to have played a part in making Responsible AI accessible and fun for young minds!</div>
+        </div>
+    </div>
+
+    <script>
+        // Star creation function
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 100;
+
+            // Clear existing stars
+            starsContainer.innerHTML = '';
+
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                const size = Math.random() * 3 + 1;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 2;
+
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${left}%`;
+                star.style.top = `${top}%`;
+                star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite ${delay}s`;
+
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Theme toggle functionality
+        const themeToggle = document.querySelector('.theme-toggle');
+        const root = document.documentElement;
+
+        function applyTheme(theme) {
+            root.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            createStars();
+        }
+
+        function toggleTheme() {
+            const currentTheme = root.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        }
+
+        // Initialize theme
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            applyTheme(savedTheme);
+        }
+
+        // Event listeners
+        themeToggle.addEventListener('click', toggleTheme);
+        window.addEventListener('load', initTheme);
+        window.addEventListener('load', createStars);
+    </script>
+</body>
+</html>

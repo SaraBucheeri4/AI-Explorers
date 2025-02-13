@@ -1,0 +1,414 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cherry Bomb One', cursive;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+:root {
+    --background: #0B0B3B;
+    --text: #ffffff;
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --button-hover: rgba(255, 255, 255, 0.2);
+    --star-color: white;
+    --button-bg: #FA8072;  /* Salmon color for dark mode */
+    --button-shadow: rgba(250, 128, 114, 0.5);  /* Salmon shadow for dark mode */
+}
+
+[data-theme="light"] {
+    --background: #E6CCFF;
+    --text: #3D155F;
+    --card-bg: rgba(61, 21, 95, 0.1);
+    --button-hover: rgba(61, 21, 95, 0.2);
+    --star-color: #3D155F;
+    --button-bg: #4B0082;  /* Dark purple for light mode */
+    --button-shadow: rgba(75, 0, 130, 0.5);  /* Purple shadow for light mode */
+}
+
+/* Update spaceship positioning */
+.spaceship {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: url('Firefly_create_a_mascot_for_our_website_catered_to_kids_on_the_theme_responsible_ai_for_a_space_them-removebg-preview.png') no-repeat center center;
+    background-size: contain;
+    opacity: 0;
+    transition: all 1.5s ease-in-out;
+    z-index: 10;
+}
+
+.spaceship.initial-entry {
+    opacity: 1;
+    top: 50%;
+}
+body {
+    background: var(--background);
+    color: var(--text);
+    transition: all 0.5s ease;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.theme-toggle {
+    position: fixed;
+    right: 30px;
+    top: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    padding: 0;  /* Remove any padding */
+}
+
+.theme-toggle .icon {
+    position: relative;
+    width: 24px;  /* Reduced from 32px */
+    height: 24px;  /* Reduced from 32px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle svg {
+    stroke: var(--text);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  /* Center the SVG */
+    width: 100%;
+    height: 100%;
+}
+.theme-toggle .sun,
+.theme-toggle .moon {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.5s ease;
+}
+
+[data-theme="light"] .moon {
+    opacity: 0;
+}
+
+[data-theme="light"] .sun {
+    opacity: 1;
+}
+
+[data-theme="dark"] .moon {
+    opacity: 1;
+}
+
+[data-theme="dark"] .sun {
+    opacity: 0;
+}
+
+[data-theme="light"] .theme-toggle {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+h1, h2, h3, h4, h5, h6, p, span, .logo-title, .planet-text {
+    color: var(--text);
+}
+
+.logo-title {
+    color: var(--text);
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px var(--planet-shadow);
+}
+
+.planet:hover {
+    box-shadow: 0 0 30px var(--planet-shadow);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.logo {
+    width: 60px;
+    height: auto;
+    object-fit: contain;
+}
+
+.logo-title {
+    font-size: 1.8rem;
+}
+
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+@keyframes shooting-star {
+    0% {
+        transform: translateX(0) translateY(0) rotate(45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(1000px) translateY(1000px) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+.stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.star {
+    position: absolute;
+    background: var(--star-color);
+    border-radius: 50%;
+    transition: background-color 0.5s ease;
+}
+
+.shooting-star {
+    position: absolute;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--star-color), transparent);
+    animation: shooting-star 2s linear infinite;
+}
+
+.main-title {
+    text-align: center;
+    font-size: 4rem;
+    padding: 2rem;
+    text-shadow: 0 0 10px var(--planet-shadow);
+    animation: float 4s ease-in-out infinite;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 250px);
+    position: relative;
+}
+
+@keyframes astronautFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.astronaut-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.astronaut {
+    width: 280px;
+    height: 300px;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.watch-button {
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;  /* Text will always be white in both modes */
+    background: var(--button-bg);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    position: absolute;
+    bottom: -130px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 15px var(--button-shadow);
+    letter-spacing: 1px;
+    overflow: hidden;
+}
+
+[data-theme="light"] .watch-button {
+    background: var(--button-bg);
+    box-shadow: 0 0 15px var(--button-shadow);
+}
+
+.watch-button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    box-shadow: 0 0 25px var(--button-shadow);
+}
+
+.watch-button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+}
+
+.watch-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 60%);
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.watch-button:active::after {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 1;
+    transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.planets {
+    position: relative;
+    width: 1000px;
+    height: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.planet {
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    animation: float 5s ease-in-out infinite;
+    position: relative;
+    text-align: center;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.planet:hover {
+    transform: scale(1.15);
+}
+
+.planet-text {
+    color: var(--text);
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+}
+
+[data-theme="light"] .planet-text {
+    text-shadow: 2px 2px 4px rgba(61, 21, 95, 0.3);
+}
+
+.main-title {
+    text-align: center;
+    font-size: 4rem;
+    padding: 2rem;
+    color: var(--text);
+    text-shadow: 0 0 10px var(--planet-shadow);
+    animation: float 4s ease-in-out infinite;
+    letter-spacing: 2px;
+}
+
+[data-theme="light"] .main-title {
+    text-shadow: 2px 2px 8px rgba(61, 21, 95, 0.3);
+}
+
+#planet1 {
+    width: 250px;
+    height: 250px;
+    animation-duration: 4s;
+}
+
+#planet2 {
+    width: 310px;
+    height: 310px;
+    animation-duration: 6s;
+}
+
+#planet3 {
+    width: 300px;
+    height: 300px;
+    animation-duration: 7s;
+}
+
+#planet4 {
+    width: 280px;
+    height: 280px;
+    animation-duration: 5s;
+}
+
+
+.planet img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;  /* Add transition for smooth scaling */
+}
+.planet .planet-text {
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+}
+
+
+.planets-left, .planets-right {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}

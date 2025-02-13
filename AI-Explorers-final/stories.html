@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Stories: Responsible AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stories.css">
+</head>
+<body>
+    <a href="index.html" class="home-button">
+        <img src="logo.png" alt="AI Explorers Logo">
+        <span class="logo-text">AI Explorers</span>
+    </a>
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <div class="icon">
+            <svg class="sun" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </div>
+    </button>
+
+    <div class="space" id="space">
+        <div id="stars"></div>
+        <div class="message" id="initialMessage">
+            <h1>Let's see how AI can help us through these examples!</h1>
+        </div>
+        <a href="nova.mp4" class="nova-button">
+            Hear from Ms Nova
+        </a>
+        <div id="clickMessage" class="message">
+            <h1>Click on the Astronauts to learn more!</h1>
+        </div>        
+        <div class="planet">
+            <div class="spaceship" id="ship"></div>
+            <div class="case-image" data-case="1">
+                <img src="Firefly_MAKE_THE_FLAG_IN_THE_IMAGE_GREEN_38083-removebg-preview.png" alt="Study Buddy Case">
+            </div>
+            <div class="case-image" data-case="2">
+                <img src="Firefly_MAKE_THE_FLAG_IN_THE_IMAGE_PLAIN_RED_COLOR_25939-removebg-preview.png" alt="Art Adventures Case">
+            </div>
+            <div class="case-image" data-case="3">
+                <img src="Firefly_MAKE_THE_FLAG_IN_THE_IMAGE_PURPLE_58892-removebg-preview.png" alt="Fact Finding Case">
+            </div>
+            <div class="case-image" data-case="4">
+                <img src="Firefly_MAKE_THE_FLAG_IN_THE_IMAGE_YELLOW_38083-removebg-preview.png" alt="Space Safety Case">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <h2 id="modalTitle"></h2>
+        <p id="modalStory"></p>
+        <p class="lesson" id="modalLesson"></p>
+        <button id="playButton">Play Audio</button>
+        <button onclick="closeModal()">Blast Off Back to Ship! 🚀</button>
+    </div>
+
+    <audio id="audioPlayer"></audio>
+    <script src="stories.js"></script>
+</body>
+</html>
